@@ -20,23 +20,30 @@ import re
 import sys
 
 MD_RE = re.compile(r"\.md$")
+# 只校验真正的 Markdown 链接 [文本](路径)；不再用裸路径正则匹配，
+# 避免把方法论文档中的示例/说明性路径（如 `scripts/x.py`、references/...）误判为断链。
 LINK_RE = re.compile(r"\]\(((?:references|scripts|assets)/[^)]+)\)")
-REF_RE = re.compile(r"(?:references|scripts|assets)/[A-Za-z0-9_./-]+")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*#*$", re.MULTILINE)
 NUMERIC_RE = re.compile(r"(\d+)\s*(?:个)?\s*(子技能|references|篇\s*references|脚本|assets|个子技能)")
-# 规范词 → 同义写法（扫描非规范写法作为术语漂移信号）
+# 规范词 → 非规范写法（仅收录真正的拼写/写法错误，不收录同义正确术语）
+# 注意：误报同属 bug。'路由表' 是 superpower 根 SKILL.md 路由表的标准叫法，
+# 'playbook' 是方法论文档的英文标准词，二者均非笔误，不得作为漂移信号。
 TERM_MAP = {
     "Level A": [r"\bA\s*级\b", r"\bA级\b", r"\bLv\s*A\b"],
     "Level B": [r"\bB\s*级\b", r"\bB级\b", r"\bLv\s*B\b"],
-    "能力索引": [r"路由表"],
-    "参考手册": [r"playbook", r"Playbook"],
 }
 
 
 def iter_md(repo):
-    for root, _, files in os.walk(repo):
-        if ".git" in root:
+    repo_abs = os.path.abspath(repo)
+    for root, dirs, files in os.walk(repo):
+        if ".git" in root.split(os.sep):
             continue
+        # 不进入被扫描根目录直属的 tests/（本工具的自检合成样本，非仓库内容）；
+        # 从 dirs 裁剪以阻止 os.walk 继续下钻。若用户显式 --repo tests/sample_bad，
+        # 该路径自身不含直属 tests/ 子目录，仍会被正常扫描。
+        if root == repo_abs and "tests" in dirs:
+            dirs.remove("tests")
         for f in files:
             if MD_RE.search(f):
                 yield os.path.join(root, f)
@@ -46,10 +53,10 @@ def scan(repo):
     findings = []
     rel = lambda p: os.path.relpath(p, repo)
 
-    # 1. 断链
+    # 1. 断链（仅校验 Markdown 链接 [文本](路径) 中的真实引用）
     for p in iter_md(repo):
         txt = open(p, encoding="utf-8", errors="ignore").read()
-        for m in set(LINK_RE.findall(txt) + REF_RE.findall(txt)):
+        for m in set(LINK_RE.findall(txt)):
             if not os.path.exists(os.path.join(repo, m)):
                 findings.append({"type": "broken_link", "file": rel(p), "detail": f"引用不存在: {m}", "severity": "fail"})
 
@@ -63,7 +70,9 @@ def scan(repo):
                 findings.append({"type": "duplicate_heading", "file": rel(p), "detail": f"重复标题: '{h}'", "severity": "warn"})
             seen[h] = True
 
-    # 3. 数字对账（README/SKILL.md 声称数 vs 实际目录数）
+    # 3. 数字对账（仅校验仓库显式声明结构数的位置：README.md 与根 SKILL.md）
+    #    不在 references/、skills/、decisions/ 等文档里逐项比对——那些是示例/历史数字，
+    #    会被误判为"声称数"造成大量误报（误报同属 bug）。
     def count_dir(layer):
         d = os.path.join(repo, layer)
         if not os.path.isdir(d):
@@ -76,7 +85,10 @@ def scan(repo):
         "脚本": count_dir("scripts"),
         "assets": count_dir("assets"),
     }
-    for p in iter_md(repo):
+    for name in ("README.md", "SKILL.md"):
+        p = os.path.join(repo, name)
+        if not os.path.isfile(p):
+            continue
         txt = open(p, encoding="utf-8", errors="ignore").read()
         for m in NUMERIC_RE.finditer(txt):
             claimed = int(m.group(1))

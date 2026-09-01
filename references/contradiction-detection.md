@@ -17,7 +17,7 @@
 ## 二、检测启发式（脚本实现）
 
 1. **数字对账**：在 README/SKILL.md 里用正则抓"(\d+)\s*(个子技能|篇 references|个脚本|个 assets)"，与实际目录 `len(os.listdir)` 比对。
-2. **断链**：抓 `references/...`、`scripts/...`、`assets/...` 形式的路径出现（含 markdown 链接与行内引用），逐个 `os.path.exists` 校验。
+2. **断链**：仅校验真正的 Markdown 链接 `[文本](references|scripts|assets/...)`，对命中路径逐个 `os.path.exists` 校验（示例/说明性路径不再误判为断链）。
 3. **重复标题**：解析每个 `.md` 的 `##`/`###` 标题，统计文本重复。
 4. **术语漂移**：维护一张"规范词 → 同义写法"映射表（如 `Level A → [A 级, A级, LvA]`），扫描非规范写法。映射表放在本仓库 `assets/`（待补时可空跑）。
 
