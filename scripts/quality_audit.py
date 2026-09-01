@@ -22,10 +22,28 @@ import re
 import sys
 
 FM_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.S)
-PATH_RE = re.compile(r"(?:references|scripts|assets)/[A-Za-z0-9_./-]+")
+PATH_RE = re.compile(r"(?:references|scripts|assets)/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*")
+# 代码块 / 行内代码：TODO 出现在其中属于「文档里引用字面量」，不是遗留待办标记。
+FENCE_RE = re.compile(r"```.*?```", re.S)
+CODESPAN_RE = re.compile(r"`[^`\n]*`")
+EXAMPLE_SIBLING_SUFFIX = ".example"
+
+
+def looks_like_file(ref):
+    """悬空路由只校验**看得出是文件**的引用：末段必须带点（扩展名）。
+
+    反例：散文里的 `references/scripts/assets`（枚举三层目录名）末段无点，不是路径引用；
+    早期实现会把它判成悬空路由。注意不要按扩展名长度截断——
+    `assets/Dockerfile.node.multistage` 这类长扩展名必须整段保留。
+    """
+    last = ref.rstrip("/").rsplit("/", 1)[-1]
+    return "." in last and not last.endswith(".")
 LINK_RE = re.compile(r"\]\(((?:references|scripts|assets)/[^)]+)\)")
-INSTALL_WHOLE_RE = re.compile(r"npx\s+skills\s+add\s+skills-repo/[a-z0-9-]+\s*$", re.MULTILINE)
-INSTALL_SINGLE_RE = re.compile(r"npx\s+skills\s+add\s+skills-repo/[a-z0-9-]+@[a-z0-9-]+\s*$", re.MULTILINE)
+# Q4/Q9：规范只要求 `npx skills add skills-repo/<repo>[@<name>]`，尾部 flags（如 `-g -y`）是**可选**的，
+# 组织内两种风格并存。因此不要把命令锚定到行尾（`\s*$`）——那会把所有带 flags 的 README 判成缺命令。
+# 整库命令用负向断言排除 `@`，避免单技能命令被误算成整库命令。
+INSTALL_WHOLE_RE = re.compile(r"npx\s+skills\s+add\s+skills-repo/[a-z0-9-]+(?![\w@-])")
+INSTALL_SINGLE_RE = re.compile(r"npx\s+skills\s+add\s+skills-repo/[a-z0-9-]+@[a-z0-9-]+(?![\w-])")
 TODO_RE = re.compile(r"\bTODO\b")
 
 
@@ -111,10 +129,11 @@ def audit(repo):
         add("Q7", "根 SKILL.md ≤150 行", "fail", f"当前 {len(lines)} 行")
     else:
         add("Q7", "根 SKILL.md ≤150 行", "pass", f"{len(lines)} 行")
-    if TODO_RE.search(text):
+    prose = CODESPAN_RE.sub(" ", FENCE_RE.sub(" ", text))
+    if TODO_RE.search(prose):
         add("Q7", "根 SKILL.md 无 TODO", "fail", "发现遗留 TODO 标记")
     else:
-        add("Q7", "根 SKILL.md 无 TODO", "pass", "无 TODO")
+        add("Q7", "根 SKILL.md 无 TODO", "pass", "无 TODO（代码块/行内代码内的字面量不计）")
 
     # 子技能 frontmatter (Q2/Q3/Q5)
     skills_dir = os.path.join(repo, "skills")
@@ -147,10 +166,19 @@ def audit(repo):
             fp = os.path.join(layer, f)
             if fp not in text and f not in text:
                 add("route", f"路由索引 ({fp})", "warn", "文件存在但根 SKILL.md 未索引（孤儿）")
-    for m in set(PATH_RE.findall(text) + LINK_RE.findall(text)):
+    for m in sorted(set(PATH_RE.findall(text) + LINK_RE.findall(text))):
+        if not looks_like_file(m):
+            continue
         full = os.path.join(repo, m)
-        if not os.path.exists(full):
-            add("route", f"悬空路由 ({m})", "fail", f"根 SKILL.md 引用但磁盘不存在: {m}")
+        if os.path.exists(full):
+            continue
+        # 组织约定：`X.example.<ext>` 是随库发布的模板，`X.<ext>` 由用户复制后自建（运行时产物）。
+        # 存在 .example 兄弟文件时不算悬空，降级为 warn 以免把"待用户创建"误报成断链。
+        stem, ext = os.path.splitext(full)
+        if os.path.exists(stem + EXAMPLE_SIBLING_SUFFIX + ext) or os.path.exists(full + EXAMPLE_SIBLING_SUFFIX):
+            add("route", f"运行时产物路由 ({m})", "warn", "磁盘不存在，但有 .example 模板兄弟文件（由用户复制生成）")
+            continue
+        add("route", f"悬空路由 ({m})", "fail", f"根 SKILL.md 引用但磁盘不存在: {m}")
 
     # README 双安装 + 清单一致性 (Q4/Q9/W1)
     rd = os.path.join(repo, "README.md")
