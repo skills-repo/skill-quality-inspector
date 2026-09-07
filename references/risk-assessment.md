@@ -44,6 +44,6 @@
 
 ## 相关子技能与层次边界（L2→L3）
 
-- `skills/risk-evaluator/SKILL.md` — 本篇的执行落地层：本篇给"三维风险 + 三级定级 + 定级矩阵 + 处置流程 + 坑"，子技能给一次完整风险评估的执行步骤与矩阵产出（见其「工作流」与「限制」）。
+- [skills/risk-evaluator/SKILL.md](../skills/risk-evaluator/SKILL.md) — 本篇的执行落地层：本篇给"三维风险 + 三级定级 + 定级矩阵 + 处置流程 + 坑"，子技能给一次完整风险评估的执行步骤与矩阵产出（见其「工作流」与「限制」）。
 - 边界：**定级标准归本篇，采信号与出矩阵归子技能**。安全启发式只给"可疑信号"，是否定罪需按本篇第五节结合上下文判断，误报同样算 bug。
-- 处置联动：定级后的实际修复交 `skills/contradiction-fixer/SKILL.md`（内容矛盾类）或仓库负责人；本层严格保持"只定级、不改文件"的只读边界。
+- 处置联动：定级后的实际修复交 [skills/contradiction-fixer/SKILL.md](../skills/contradiction-fixer/SKILL.md)（内容矛盾类）或仓库负责人；本层严格保持"只定级、不改文件"的只读边界。

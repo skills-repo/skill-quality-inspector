@@ -62,6 +62,6 @@
 
 ## 相关子技能与层次边界（L2→L3）
 
-- `skills/quality-auditor/SKILL.md` — 本篇的执行落地层：本篇给"门禁→动作映射 + 脚本 vs 人工分工 + 判定口径 + 坑"，子技能给一次完整质检的执行步骤与报告产出（见其「工作流」与「限制」）。
+- [skills/quality-auditor/SKILL.md](../skills/quality-auditor/SKILL.md) — 本篇的执行落地层：本篇给"门禁→动作映射 + 脚本 vs 人工分工 + 判定口径 + 坑"，子技能给一次完整质检的执行步骤与报告产出（见其「工作流」与「限制」）。
 - 边界：**口径归本篇，跑批归子技能**。写任何门禁正则前必读本篇第三点五节（规范文本是唯一依据，不能拿现有仓库写法反推标准）。
-- 分工联动：结构类失配交 `skills/directory-standardizer/SKILL.md`；跨文件矛盾与断链交 `skills/contradiction-fixer/SKILL.md`；本篇清单只负责"查出来并归类"。
+- 分工联动：结构类失配交 [skills/directory-standardizer/SKILL.md](../skills/directory-standardizer/SKILL.md)；跨文件矛盾与断链交 [skills/contradiction-fixer/SKILL.md](../skills/contradiction-fixer/SKILL.md)；本篇清单只负责"查出来并归类"。

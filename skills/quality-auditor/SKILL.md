@@ -21,7 +21,7 @@ metadata:
 
 - **门禁映射**：把 `rules/quality-gates.md` 的 Q1–Q10 / W1–W7 翻译成可勾选的核验项
 - **结构核验**：根路由层、references、skills、scripts、assets 五层是否齐全且达标
-- **自动化核验**：调用 `scripts/quality_audit.py` 跑结构 + 跨文件一致性 + 路由完整性，产出 JSON/MD 报告
+- **自动化核验**：调用 [scripts/quality_audit.py](../../scripts/quality_audit.py) 跑结构 + 跨文件一致性 + 路由完整性，产出 JSON/MD 报告
 - **分级判定**：依据 `rules/superpower-architecture.md` 第 3 节给出 Level A / B / partial / legacy 结论
 - **清单输出**：报告按"阻断 / 警告 / 建议"三档归类，直接可用作整改 TODO
 
@@ -36,9 +36,9 @@ metadata:
 
 1. **确认识别**：锁定目标仓库路径，确认其为 superpower 仓库（根 `SKILL.md` 含 `metadata.architecture: superpower`）。
 2. **跑脚本**：`python3 scripts/quality_audit.py --repo <path> --json`，拿到结构化结果（逐检查项 pass/warn/fail）。
-3. **人工补检**：脚本管不了的项（Q1 描述是否具体、W6 references 增量性、W2 中文语境）按 `references/quality-dimensions.md` 的清单逐条过。
+3. **人工补检**：脚本管不了的项（Q1 描述是否具体、W6 references 增量性、W2 中文语境）按 [references/quality-dimensions.md](../../references/quality-dimensions.md) 的清单逐条过。
 4. **定级**：结构脚本达标分 + 内容门禁结果 → 落 `Level A/B` 或标记 `partial`/`legacy`。
-5. **出报告**：用 `assets/quality-report-template.md` 套模板，按阻断/警告/建议三档列出，交给仓库负责人整改。
+5. **出报告**：用 [assets/quality-report-template.md](../../assets/quality-report-template.md) 套模板，按阻断/警告/建议三档列出，交给仓库负责人整改。
 
 ## 适用场景
 

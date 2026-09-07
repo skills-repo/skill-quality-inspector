@@ -34,9 +34,9 @@ metadata:
 
 ## 工作流
 
-1. **采集信号**：结合 `scripts/quality_audit.py` 与 `scripts/contradiction_scan.py` 的输出，叠加本技能的安全启发式（扫描 `scripts/*.py` 里的 `os.system`/`subprocess`/`curl`/`eval` 危险调用）。
-2. **三维打分**：按 `references/risk-assessment.md` 的矩阵逐维度判 P1/P2/P3。
-3. **出矩阵**：用 `assets/risk-matrix.csv` 作为维度骨架，生成该仓库的风险清单（维度 / 级别 / 证据 / 处置 / SLA）。
+1. **采集信号**：结合 [scripts/quality_audit.py](../../scripts/quality_audit.py) 与 [scripts/contradiction_scan.py](../../scripts/contradiction_scan.py) 的输出，叠加本技能的安全启发式（扫描 `scripts/*.py` 里的 `os.system`/`subprocess`/`curl`/`eval` 危险调用）。
+2. **三维打分**：按 [references/risk-assessment.md](../../references/risk-assessment.md) 的矩阵逐维度判 P1/P2/P3。
+3. **出矩阵**：用 [assets/risk-matrix.csv](../../assets/risk-matrix.csv) 作为维度骨架，生成该仓库的风险清单（维度 / 级别 / 证据 / 处置 / SLA）。
 4. **排期**：P1 当轮修，P2 进本周，P3 进 backlog；不修的标注 `review_needed`。
 
 ## 适用场景

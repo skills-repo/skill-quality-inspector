@@ -47,6 +47,6 @@
 
 ## 相关子技能与层次边界（L2→L3）
 
-- `skills/directory-standardizer/SKILL.md` — 本篇的执行落地层：本篇给"五层职责边界 + 命名约定 + Level 判定速查 + 错配清单"，子技能给对齐目录、补路由、消孤儿的操作步骤（见其「工作流」）。
+- [skills/directory-standardizer/SKILL.md](../skills/directory-standardizer/SKILL.md) — 本篇的执行落地层：本篇给"五层职责边界 + 命名约定 + Level 判定速查 + 错配清单"，子技能给对齐目录、补路由、消孤儿的操作步骤（见其「工作流」）。
 - 边界：**该不该改归本篇（判定），怎么改归子技能（执行）**。尤其 Level A/B 的取舍先读本篇第四节速查表，避免"为凑 A 造脚本"。
-- 定级联动：结构分档的事实来源始终是 `skills-repo-admin` 的 `audit_architecture.py`；本仓 `skills/quality-auditor/SKILL.md` 只在其之上做跨文件一致性补充，不重复判分。
+- 定级联动：结构分档的事实来源始终是 `skills-repo-admin` 的 `audit_architecture.py`；本仓 [skills/quality-auditor/SKILL.md](../skills/quality-auditor/SKILL.md) 只在其之上做跨文件一致性补充，不重复判分。

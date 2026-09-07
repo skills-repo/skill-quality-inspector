@@ -35,7 +35,7 @@ metadata:
 ## 工作流
 
 1. **采集**：`python3 scripts/redundancy_scan.py --org <root> --json`，拿到重名 / 近重描述 / 关键词重叠三类候选。
-2. **判重叠**：参照 `references/redundancy-reduction.md` 的重叠判据（同名、语义等价、触发词打架），过滤误报。
+2. **判重叠**：参照 [references/redundancy-reduction.md](../../references/redundancy-reduction.md) 的重叠判据（同名、语义等价、触发词打架），过滤误报。
 3. **出建议**：对真重叠给出处置——能合并的提 PR（新建聚合子技能），不能合并的标记 `deprecated: true` 而非删目录。
 4. **合规兜底**：任何建议都要过"只增不减"校验：被 `skills-lock.json` 锁定的路径不得改名 / 删除。
 5. **落 registry**：合并 / 废弃结果同步到 `registry/repos.json`，保持账实一致。

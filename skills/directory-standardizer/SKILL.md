@@ -34,8 +34,8 @@ metadata:
 
 ## 工作流
 
-1. **采集**：复用 `scripts/quality_audit.py` 的路由完整性 + 体量检查输出，叠加本技能的文件树校验。
-2. **逐项比对**：按 `references/directory-standardization.md` 的清单，核对五层职责边界（如 scripts 不放方法论、references 不放可独立安装能力）。
+1. **采集**：复用 [scripts/quality_audit.py](../../scripts/quality_audit.py) 的路由完整性 + 体量检查输出，叠加本技能的文件树校验。
+2. **逐项比对**：按 [references/directory-standardization.md](../../references/directory-standardization.md) 的清单，核对五层职责边界（如 scripts 不放方法论、references 不放可独立安装能力）。
 3. **定位孤儿 / 悬空**：列出未被索引的文件与指向空路径的路由行。
 4. **出整改单**：每条不达标给具体修复动作（移动目录 / 补路由行 / 改名），默认不改文件，除非用户明确要修。
 5. **回归**：整改后重跑 `audit_architecture.py --strict`，确认 Level 达标且无新孤儿。

@@ -56,7 +56,7 @@ npx skills add skills-repo/skill-quality-inspector@quality-auditor
 1. **新建自检**：写完仓库跑 `python3 scripts/quality_audit.py --repo <path> --strict`。
 2. **矛盾扫描**：`python3 scripts/contradiction_scan.py --repo <path>` 查断链/数字矛盾。
 3. **组织巡检**：`python3 scripts/redundancy_scan.py --org <root>` 查跨仓库重叠。
-4. **出报告**：用 `assets/quality-report-template.md` 套模板，按阻断/警告/建议三档交付。
+4. **出报告**：用 [assets/quality-report-template.md](assets/quality-report-template.md) 套模板，按阻断/警告/建议三档交付。
 5. **门禁兜底**：再跑 `audit_architecture.py` 与 `audit_readme_gates.py`（`skills-repo-admin`）。
 
 ## 许可

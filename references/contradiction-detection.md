@@ -44,6 +44,6 @@
 
 ## 相关子技能与层次边界（L2→L3）
 
-- `skills/contradiction-fixer/SKILL.md` — 本篇的执行落地层：本篇给"矛盾类型学 + 修复 SOP + 坑"的判断依据，子技能给可直接调用的操作步骤（见其「工作流」与「限制」两节）。
+- [skills/contradiction-fixer/SKILL.md](../skills/contradiction-fixer/SKILL.md) — 本篇的执行落地层：本篇给"矛盾类型学 + 修复 SOP + 坑"的判断依据，子技能给可直接调用的操作步骤（见其「工作流」与「限制」两节）。
 - 边界：**定性归本篇，动手归子技能**。判断一条 finding 是阻断还是警告、术语选哪个写法为准，读本篇；实际执行扫描 → 定级 → 改文件 → 回归，走子技能。
-- 风险联动：若矛盾被判为 P1/P2 需要排期，交 `skills/risk-evaluator/SKILL.md` 定级，不在修复流程里自行拍板 SLA。
+- 风险联动：若矛盾被判为 P1/P2 需要排期，交 [skills/risk-evaluator/SKILL.md](../skills/risk-evaluator/SKILL.md) 定级，不在修复流程里自行拍板 SLA。

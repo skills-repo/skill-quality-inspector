@@ -35,7 +35,7 @@ metadata:
 ## 工作流
 
 1. **扫描**：`python3 scripts/contradiction_scan.py --repo <path> --json`，得到断链 / 重复标题 / 数字矛盾 / 术语漂移四类 findings。
-2. **定性**：参照 `references/contradiction-detection.md` 的矛盾类型学，给每条 finding 定严重度（阻断 / 警告）。
+2. **定性**：参照 [references/contradiction-detection.md](../../references/contradiction-detection.md) 的矛盾类型学，给每条 finding 定严重度（阻断 / 警告）。
 3. **优先修阻断项**：数字对账失败、断链、规则冲突先修——它们会直接误导 Agent 路由。
 4. **术语统一**：选一个规范写法，全库替换；在根 `SKILL.md` 或 AGENTS.md 固定术语表，防止复发。
 5. **回归**：修完重跑脚本，确认 findings 归零（或仅剩可接受的建议项）。
