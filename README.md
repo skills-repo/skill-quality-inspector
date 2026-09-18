@@ -45,10 +45,10 @@ skill-quality-inspector/
 
 ```bash
 # 整库安装（推荐）—— 拿到路由层 + 全部 references/scripts/assets
-npx skills add skills-repo/skill-quality-inspector
+npx skills add skills-repo/skill-quality-inspector -g -y
 
 # 单技能安装 —— 只要某一个细粒度能力
-npx skills add skills-repo/skill-quality-inspector@quality-auditor
+npx skills add skills-repo/skill-quality-inspector@quality-auditor -g -y
 ```
 
 ## 推荐工作流
