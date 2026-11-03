@@ -35,7 +35,7 @@ skill-quality-inspector/
 
 | 环节 | 子技能 | 描述 |
 |------|--------|------|
-| 质量检查 | `quality-auditor` | 对照 Q1–Q10/W1–W7 与架构规范逐条核验并出报告 |
+| 质量检查 | `quality-auditor` | 对照 Q1–Q11/W1–W7 与架构规范逐条核验并出报告 |
 | 矛盾修复 | `contradiction-fixer` | 修复数字不一致、规则冲突、断链、术语漂移 |
 | 风险评估 | `risk-evaluator` | 安全/维护/合规三维定级（P1/P2/P3） |
 | 冗余治理 | `redundancy-reducer` | 检测重名/近重/关键词打架，提出合并去重建议 |

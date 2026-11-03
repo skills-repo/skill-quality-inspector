@@ -2,7 +2,7 @@
 name: skill-quality-inspector
 description: >-
   技能质量检查官：检查技能仓库质量、修复技能矛盾点、评估技能风险、减少技能冗余、规范技能目录。
-  覆盖 superpower 五层结构校验、质量门禁（Q1–Q10/W1–W7）对账、断链与数字矛盾扫描、
+  覆盖 superpower 五层结构校验、质量门禁（Q1–Q11/W1–W7）对账、断链与数字矛盾扫描、
   安全/维护/合规三维风险评估、跨仓库重名与近重检测。
   触发词："技能质量"、"质量门禁"、"矛盾修复"、"风险评估"、"技能冗余"、"目录规范"、
   "skill audit"、"quality gate"、"skill lint"。
@@ -35,7 +35,7 @@ metadata:
 
 | 任务 | 读取·调用 | grep 关键词 |
 |------|-----------|-------------|
-| 质量维度与门禁对照 | [references/quality-dimensions.md](references/quality-dimensions.md) | 质量门禁、Q1-Q10、W1-W7、质检清单 |
+| 质量维度与门禁对照 | [references/quality-dimensions.md](references/quality-dimensions.md) | 质量门禁、Q1-Q11、W1-W7、质检清单 |
 | 矛盾点检测方法论 | [references/contradiction-detection.md](references/contradiction-detection.md) | 矛盾、断链、数字对账、术语漂移、重复标题 |
 | 风险评估矩阵 | [references/risk-assessment.md](references/risk-assessment.md) | 风险、P1/P2/P3、安全、维护、合规 |
 | 冗余识别与去重 | [references/redundancy-reduction.md](references/redundancy-reduction.md) | 冗余、重名、近重、只增不减、去重 |

@@ -1,12 +1,12 @@
 ---
 name: quality-auditor
-description: 技能质量检查：对照组织质量门禁（Q1–Q10/W1–W7）与 superpower 架构规范，逐项核验技能仓库并产出质量报告
+description: 技能质量检查：对照组织质量门禁（Q1–Q11/W1–W7）与 superpower 架构规范，逐项核验技能仓库并产出质量报告
 source:
   type: original
   repo: skills-repo/skill-quality-inspector
   path: skills/quality-auditor/SKILL.md
-  version: "1.0.0"
-  updated: "2026-08-14"
+  version: "1.0.1"
+  updated: "2026-11-03"
 metadata:
   category: 技能治理
   platform: 通用
@@ -19,7 +19,7 @@ metadata:
 
 ## 能力
 
-- **门禁映射**：把 `rules/quality-gates.md` 的 Q1–Q10 / W1–W7 翻译成可勾选的核验项
+- **门禁映射**：把 `rules/quality-gates.md` 的 Q1–Q11 / W1–W7 翻译成可勾选的核验项（Q11 链接可达性由组织 `audit_link_integrity.py` 判定，见 D104）
 - **结构核验**：根路由层、references、skills、scripts、assets 五层是否齐全且达标
 - **自动化核验**：调用 [scripts/quality_audit.py](../../scripts/quality_audit.py) 跑结构 + 跨文件一致性 + 路由完整性，产出 JSON/MD 报告
 - **分级判定**：依据 `rules/superpower-architecture.md` 第 3 节给出 Level A / B / partial / legacy 结论

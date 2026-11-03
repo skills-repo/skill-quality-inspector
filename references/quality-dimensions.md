@@ -16,6 +16,7 @@
 | Q8 路径稳定 | 既有 `skills/<name>/` 未被删/改名 | `git diff --name-status` | 脚本 |
 | Q9 双安装命令 | README 含整库 + 单技能两种 | 正则 | 脚本 |
 | Q10 注册表同步 | `registry/repos.json` 字段与实况一致 | 比对 | 人工 |
+| Q11 链接可达性 | Markdown 相对链接解析到真实文件（D104） | 组织 `audit_link_integrity.py --strict` | 脚本 |
 | W1 README 一致 | 清单表含全部 skills | 比对 | 脚本 |
 | W2 中文内容 | 正文中文为主 | 采样 | 人工 |
 | W6 references 增量 | 含决策/坑/清单而非复制 | 抽样读 | 人工 |
@@ -23,7 +24,7 @@
 
 ## 二、脚本能查 vs 必须人工
 
-**脚本已覆盖（确定性）**：frontmatter、命名、路由索引、安装命令、行数/TODO、双安装、README 清单、脚本 `--help`、跨文件数字对账（`quality_audit.py` + `contradiction_scan.py`）。
+**脚本已覆盖（确定性）**：frontmatter、命名、路由索引、安装命令、行数/TODO、双安装、README 清单、脚本 `--help`、跨文件数字对账（`quality_audit.py` + `contradiction_scan.py`）、链接可达性（Q11，组织 `audit_link_integrity.py`，验收口径是「链接可解析」而非「链接条数>0」，见 D104）。
 
 **必须人工（需判断）**：
 - Q1 的 `description` 是否"具体、非废话"——脚本只查非空，不查信息量。
@@ -36,6 +37,7 @@
 - [ ] `quality_audit.py --repo <r> --strict` 退出 0（无 fail）
 - [ ] `audit_architecture.py --repo <r> --strict` 退出 0
 - [ ] `audit_readme_gates.py --repo <r> --strict` 退出 0
+- [ ] `audit_link_integrity.py --repo <r> --strict` 退出 0（Q11；子技能内引用 references 须为 `../../references/x.md`，写 `references/x.md` 一律错）
 - [ ] `contradiction_scan.py --repo <r>` findings 无阻断项
 - [ ] 人工抽读 2 篇 references 确认有增量（W6）
 - [ ] `registry/repos.json` 的 skills/architecture/updated 与实况一致（Q10）
