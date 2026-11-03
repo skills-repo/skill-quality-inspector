@@ -9,7 +9,7 @@
 | Q1 Frontmatter 完整 | `name`/`description`/`metadata` 非空 | `quality_audit.py` 解析 frontmatter | 脚本 |
 | Q2 技能名唯一 | 同仓 `name` 不重复 | 扫描 `skills/*/SKILL.md` | 脚本 |
 | Q3 目录一致 | 子技能 `name` == 目录名 | 比对 | 脚本 |
-| Q4 安装命令格式 | README 含 `npx skills add ...@<name>` | 正则 | 脚本 |
+| Q4 安装命令格式 | 整库 `npx skills add skills-repo/<repo>`；单技能二选一：`@<name>`（legacy，根技能遮蔽下不可用）或子路径 URL（D115 实测可用） | 正则（双语法） | 脚本 |
 | Q5 来源标记 | 子技能 `source.type/repo/path` 完整 | 解析 | 脚本 |
 | Q6 架构合规 | `audit_architecture.py --strict` 退出 0 | 架构脚本 | 脚本 |
 | Q7 路由层完整 | 根 SKILL.md ≤150 行、无 TODO、`architecture: superpower` | grep + awk | 脚本 |
